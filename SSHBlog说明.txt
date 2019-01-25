@@ -4,3 +4,4 @@ hibernate -5.3.1版
 druid  -1.0.15(连接池)
 数据库驱动(mysql-connector-java-8.0.11)
 tomcat  - 7.0.88
+图文编辑器用的是(百度ueditor)
