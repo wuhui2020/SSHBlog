@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+    
+    <hibernate-mapping>
+    	<class name="com.wu.domain.User" table="user">
+    	<!-- 建立类属性那一个是主键，要跟数据库当中主键一致 -->
+    		<id name="id" column="id">
+    			<generator class="native"/>
+    		</id>
+    	<!-- 普通属性与数据库中字段进行关联-->
+	    	<property name="name" column="name" />
+	    	<property name="password" column="password" />
+	    	<!--赖加载（true） lazy="false" 
+	    	<many-to-one name="cust" class="com.wu.domain.Customer" column="cust_id" lazy="false"/>-->
+    	
+    		<!-- 配置多对多
+    		<set name="" table="">
+    		name:当前集合属性名称；
+    		table:多对多中间表  表名;
+    		inverse="true" 表示放弃外键维护权,一般被选择的一方放弃
+    		
+    		<key column=""></key>
+    		key:当前表的外键
+    		
+    		<many-to-many class="" column="" >
+    		class:集合中对像的全路径 ;
+    		column:集合中对象的外键 -->
+    		<!-- 
+    		<set name="role" table="u_r">
+    			<key column="uid"></key>
+    			<many-to-many class="com.wu.domain.Role" column="rid" lazy="false"></many-to-many>
+    		</set>
+    	 	-->
+    	</class>
+    	
+    
+    </hibernate-mapping>

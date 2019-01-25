@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" metadata-complete="true" version="3.0">
+  <absolute-ordering/>
+  <display-name>Login</display-name>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 最原始的servlet -->
+  <!-- 
+  <servlet>
+  	<servlet-name>service</servlet-name>
+  	<servlet-class>com.wu.service.myService</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>service</servlet-name>
+  	<url-pattern>/myService</url-pattern>
+  </servlet-mapping> 
+  -->
+  
+	<!-- Spring  bean形式 -->
+	<!-- spring的核心监听器 
+	加载spring的配置文件 默认加载的是在web-inf里面的applicationContext.xml -->
+	<!-- -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+  	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+   	
+   	<!-- 配置延迟加载  必须要加在struts过滤器前面  查询关联表-->
+   	<filter>
+   		<filter-name>OpenSessionInViewFilter</filter-name>
+   		<filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
+   	</filter>
+   	<filter-mapping>
+   		<filter-name>OpenSessionInViewFilter</filter-name>
+   		<url-pattern>*.action</url-pattern>
+   	</filter-mapping>
+   	
+   	<!-- struts2的核心过虑器 
+   	<filter>
+   		<filter-name>struts2</filter-name>
+   		<filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+   	</filter>
+   	<filter-mapping>
+   		<filter-name>struts2</filter-name>
+   		<url-pattern>/*</url-pattern>
+   	</filter-mapping>-->
+   	<!-- 使用自已写的过滤器 -->
+   	<filter>
+   		<filter-name>struts2</filter-name>
+   		<filter-class>com.wu.controller.MyFilter</filter-class>
+   	</filter>
+   	<filter-mapping>
+   		<filter-name>struts2</filter-name>
+   		<url-pattern>/*</url-pattern>
+   	</filter-mapping>
+   	
+   	
+</web-app>

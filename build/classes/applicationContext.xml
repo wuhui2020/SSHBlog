@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		
+		
+		<import resource="hibernateApplication.xml"/>
+		
+
+		
+		<!-- Action -->
+		<bean id="loginAction" class="com.wu.controller.LoginAction" scope="prototype">
+			<property name="loginService" ref="loginService"></property>
+		</bean>
+		<bean id="categoryAction" class="com.wu.controller.CategoryAction" scope="prototype">
+			<property name="categoryService" ref="categoryService"></property>
+		</bean>
+		<bean id="articleAction" class="com.wu.controller.ArticleAction" scope="prototype">
+			<property name="articleService" ref="articleService"></property>
+		</bean>
+		<bean id="jumpAction" class="com.wu.controller.JumpAction" scope="prototype"></bean>
+		<bean id="webAction" class="com.wu.controller.WebAction" scope="prototype">
+			<property name="categoryService" ref="categoryService"></property>
+			<property name="articleService" ref="articleService"></property>
+		</bean>
+		
+		
+		<!-- Service -->
+		<bean id="loginService" class="com.wu.service.LoginServiceImpl">
+			<property name="loginDao" ref="loginDao"></property>
+		</bean>
+		<bean id="categoryService" class="com.wu.service.CategoryServiceImpl">
+			<property name="categoryDao" ref="categoryDao"></property>
+		</bean>
+		<bean id="articleService" class="com.wu.service.ArticleServiceImpl">
+			<property name="articleDao" ref="articleDao"></property>
+		</bean>
+		
+		<!-- Dao -->
+		<bean id="loginDao" class="com.wu.dao.LoginDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<bean id="categoryDao" class="com.wu.dao.CategoryDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		<bean id="articleDao" class="com.wu.dao.ArticleDaoImpl">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+		</bean>
+		
+</beans>

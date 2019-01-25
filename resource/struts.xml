@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+	<!-- 开启开发模式 -->
+	<constant name="struts.devMode" value="true" /> 
+	
+    <package name="struts" extends="struts-default">
+    	<!-- 自定义配置拦载器 -->
+    	<interceptors>
+    		<interceptor name="loginInterceptor" class="com.wu.controller.LoginInterceptor"></interceptor>
+    	</interceptors>
+    	
+    	<!-- 全局的返回页 -->
+    	<global-results>
+    		<result name="login">/mgr_login.jsp</result>
+    	</global-results>
+    	
+    	
+    	<action name="jump_*" class="jumpAction" method="{1}">
+    		<result name="top">/WEB-INF/mgr/mgr_top.jsp</result>
+    		<result name="left">/WEB-INF/mgr/mgr_left.jsp</result>
+    		<result name="account">/WEB-INF/mgr/mgr_account.jsp</result>
+    		<result name="add">/WEB-INF/mgr/mgr_add_article.jsp</result>
+    		<allowed-methods>top,left,account,add</allowed-methods>
+    	</action>
+    
+		<action name="user_*" class="loginAction" method="{1}">
+			<result name="login_out" type="redirect">/mgr_login.jsp</result>
+			<result name="success" >/WEB-INF/mgr/mgr_index.jsp</result>
+			
+			<interceptor-ref name="loginInterceptor"><!-- 自定义拦载器 -->
+				<param name="excludeMethods">login</param><!-- 不拦载此方法 -->
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref><!-- struts2默认拦载器 -->
+			
+			<allowed-methods>login,signout</allowed-methods>
+		</action>
+		<action name="category_*" class="categoryAction" method="{1}">
+			<result name="list">/WEB-INF/mgr/mgr_category.jsp</result>
+			<result name="listAction"  type="redirectAction">category_list.action</result>
+			
+			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			
+			<allowed-methods>add,list,categoryone,update,delete,getAllCategory</allowed-methods>
+		</action>
+		
+		<action name="article_*" class="articleAction" method="{1}">
+			<result name="list">/WEB-INF/mgr/mgr_main.jsp</result>
+			<result name="edit">/WEB-INF/mgr/mgr_edit_article.jsp</result>
+			<result name="reslist" type="redirectAction">article_pageList.action</result>
+			
+			<interceptor-ref name="loginInterceptor"></interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			
+			<allowed-methods>list,pageList,delete,add,edit,updata</allowed-methods>
+		</action>
+		
+		<action name="web_*" class="webAction" method="{1}">
+			<allowed-methods>getcategory,getarticle,getonearticle</allowed-methods>
+		</action>
+		
+		
+		
+    </package>
+</struts>
